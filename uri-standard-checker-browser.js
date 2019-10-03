@@ -1,0 +1,1 @@
+window.uri_checker = require('./index.js');

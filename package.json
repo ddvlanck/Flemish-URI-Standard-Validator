@@ -1,7 +1,7 @@
 {
   "name": "flemish-uri-standard-validator",
-  "version": "1.0.0",
-  "description": "package to check if a URI meets the requirements of the flemish URI standard for data",
+  "version": "1.0.1",
+  "description": "npm package to check if a URI meets the requirements of the flemish URI standard for data",
   "main": "index.js",
   "scripts": {
     "test": "jest",
@@ -33,7 +33,7 @@
   },
   "devDependencies": {
     "@types/jest": "^24.0.18",
-    "@types/node": "^12.7.9",
+    "@types/node": "^12.7.11",
     "jest": "^24.9.0",
     "ts-jest": "^24.1.0",
     "webpack": "^4.41.0",

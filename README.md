@@ -1,4 +1,4 @@
-# Flemish-URI-Standard-Validator
+# Flemish URI Standard Validator
 
 ## Introduction
 

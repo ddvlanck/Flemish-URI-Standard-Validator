@@ -1,1 +1,1 @@
-window.uri_checker = require('./index.js');
+window.uri_validator = require('./index.js');

@@ -19,6 +19,7 @@ export class ReferenceCheck implements IValidURI {
 
         let idPos = this.URI.indexOf('/id/');
         let docPos = this.URI.indexOf('/doc/');
+        let nsPos = this.URI.indexOf('/ns/');
 
         let result: checkResult;
 
@@ -28,13 +29,15 @@ export class ReferenceCheck implements IValidURI {
             } else {
                 result = {satisfied: true, message: "Type is doc or id, so using fragment identifiers is not allowed. In this case they were not used."};
             }
-        } else {
+        } else if(nsPos > 0) {
             // Type is ns
             if(this.URI.indexOf('#') > 0){
                 result = {satisfied: true, message: "Type is ns, so using fragment identifiers is allowed. In this case, they were used."};
             } else {
                 result = {satisfied: true, message: "Type is ns, so using fragment identifiers is allowed. In this case, they were not used."};
             }
+        } else {
+            result = {satisfied: false, message: "No {type} was given. See previous rules as it is obligated to provide a {type}."}
         }
 
         return {reference: result};

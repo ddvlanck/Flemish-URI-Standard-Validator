@@ -41,9 +41,44 @@ export class FormRulesCheck implements IValidURI{
         return result;
     }
 
+    private structureCheck(): checkResult {
+        const parts = this.URI.split('://');    // Parts must have a length of 2
+        let result: checkResult = {satisfied: false, message: ""};
+
+        // We make sure {protocol} is also given
+        if(parts.length == 2 && parts[0].length > 0){
+
+            // Check if {protocol} is http(s)
+            if(parts[0] === 'http' || parts[0] === 'https'){
+                const URIParts = parts[1].split('/');   // Length must at least be 3, since it needs to have {domain}, {type} and {concept}
+
+                if(URIParts.length >= 3){
+
+                    // We can only check {type} here
+                    if(URIParts[1] == 'doc' || URIParts[1] == 'id' || URIParts[1] == 'ns'){
+                        result = {satisfied: true, message: "URI follows the recommended structure."}
+                    } else {
+                        result = {satisfied: false, message: "URI follows the recommended structure, but {type} should be id, doc or ns."};
+                    }
+
+                } else {
+                    result = {satisfied: false, message: "One (or more) of the parts {domain}, {type} or {concept} is missing."};
+                }
+
+            } else {
+                result = {satisfied: false, message: "{protocol} must be http or https"}
+            }
+
+        } else {
+            result = {satisfied: false, message: "This URI does not follow the recommended structure. Or {protocol} is missing or {domein}/{type}/{concept}(/{referentie})* is missing"};
+        }
+
+        return result;
+    }
+
     // Function to check if the URI follows the recommended structure :
     // {protocol}://{domein}/{type}/{concept}(/{referentie})*
-    private structureCheck(): checkResult {
+    /*private structureCheck(): checkResult {
         const parts = this.URI.split('://');    // Split {protocol} from the others
         let result = {satisfied: false, message : ""};
 
@@ -64,6 +99,6 @@ export class FormRulesCheck implements IValidURI{
 
         return result;
 
-    }
+    }*/
 
 }

@@ -1,6 +1,6 @@
 {
   "name": "flemish-uri-standard-validator",
-  "version": "1.0.3",
+  "version": "1.0.5",
   "description": "npm package to check if a URI meets the requirements of the flemish URI standard for data",
   "main": "index.js",
   "scripts": {
@@ -25,6 +25,15 @@
     ],
     "collectCoverage": true
   },
+  "files": [
+    "index.js",
+    "index.d.ts",
+    "lib/*.d.ts",
+    "lib/*.js",
+    "bin/*.d.ts",
+    "bin/*.js",
+    "dist"
+  ],
   "author": "Dwight Van Lancker",
   "license": "ISC",
   "dependencies": {

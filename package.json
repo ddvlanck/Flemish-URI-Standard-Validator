@@ -28,6 +28,9 @@
   "author": "Dwight Van Lancker",
   "license": "ISC",
   "dependencies": {
+    "follow-redirects": "^1.9.0",
+    "http": "0.0.0",
+    "https": "^1.0.0",
     "minimist": "^1.2.0",
     "request": "^2.88.0",
     "typescript": "^3.6.3"

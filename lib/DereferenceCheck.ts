@@ -12,7 +12,7 @@ export class DereferenceCheck implements IValidURI{
     async checkURI() {
         let redirect = await this.checkRedirect();
         let format = await this.checkSupportedSerializations();
-        return {redirect: redirect, formats: redirect};
+        return {redirect: redirect, formats: format};
     }
 
     private async checkRedirect() {

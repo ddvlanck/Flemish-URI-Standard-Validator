@@ -1,0 +1,19 @@
+language: node_js
+node_js:
+- "8"
+- "10"
+- "node"
+script:
+- npm run build
+- npm test
+cache:
+  directories:
+  - node_modules
+addons:
+  apt:
+    sources:
+    - ubuntu-toolchain-r-test
+    packages:
+    - g++-4.9
+install:
+- CC=gcc-4.9 CXX=g++-4.9 npm install

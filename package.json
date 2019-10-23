@@ -1,6 +1,6 @@
 {
   "name": "flemish-uri-standard-validator",
-  "version": "1.0.6",
+  "version": "1.0.5",
   "description": "npm package to check if a URI meets the requirements of the flemish URI standard for data",
   "main": "index.js",
   "scripts": {

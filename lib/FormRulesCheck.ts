@@ -2,15 +2,15 @@ import {checkResult, IValidURI} from "./IValidURI";
 
 // Interface for the result of this class
 export interface FormRulesResult {
-    protocol : checkResult,
+    protocol: checkResult,
     structure: checkResult
 }
 
-export class FormRulesCheck implements IValidURI{
+export class FormRulesCheck implements IValidURI {
 
     private URI: string;
 
-    constructor(uri: string){
+    constructor(uri: string) {
         this.URI = uri;
     }
 
@@ -23,19 +23,19 @@ export class FormRulesCheck implements IValidURI{
     // Function to check if the URI uses the correct protocol: HTTP(S)
     private protocolCheck(): checkResult {
         const protocol = this.URI.substring(0, this.URI.indexOf('://'));
-        let result = {satisfied: false, message : ""};
+        let result = {satisfied: false, message: ""};
 
-        if(protocol !== 'http' && protocol !== 'https'){
-            result = {satisfied : false, message : "The URI does not use the protocol HTTP(S)."};
+        if (protocol !== 'http' && protocol !== 'https') {
+            result = {satisfied: false, message: "De URI maakt geen gebruik van het HTTP(S)-protocol."};
 
         } else {
 
-            if(protocol === 'http'){
-                result = {satisfied : true, message : "Correct protocol, but try to use HTTPS."};
+            if (protocol === 'http') {
+                result = {satisfied: true, message: "Voldoet, maar probeer HTTPS te gebruiken."};
             }
 
-            if(protocol === 'https'){
-                result = {satisfied : true, message : "Correct protocol."};
+            if (protocol === 'https') {
+                result = {satisfied: true, message: ""};
             }
         }
         return result;
@@ -46,59 +46,42 @@ export class FormRulesCheck implements IValidURI{
         let result: checkResult = {satisfied: false, message: ""};
 
         // We make sure {protocol} is also given
-        if(parts.length == 2 && parts[0].length > 0){
+        if (parts.length == 2 && parts[0].length > 0) {
 
             // Check if {protocol} is http(s)
-            if(parts[0] === 'http' || parts[0] === 'https'){
+            if (parts[0] === 'http' || parts[0] === 'https') {
                 const URIParts = parts[1].split('/');   // Length must at least be 3, since it needs to have {domain}, {type} and {concept}
 
-                if(URIParts.length >= 3){
+                if (URIParts.length >= 3) {
 
                     // We can only check {type} here
-                    if(URIParts[1] == 'doc' || URIParts[1] == 'id' || URIParts[1] == 'ns'){
-                        result = {satisfied: true, message: "URI follows the recommended structure."}
+                    if (URIParts[1] == 'doc' || URIParts[1] == 'id' || URIParts[1] == 'ns') {
+                        result = {satisfied: true, message: ""}
                     } else {
-                        result = {satisfied: false, message: "URI follows the recommended structure, but {type} should be id, doc or ns."};
+                        result = {
+                            satisfied: false,
+                            message: "De URI volgt de voorgeschreven structuur, maar {type} zou 'id', 'doc' of 'ns' moeten zijn."
+                        };
                     }
 
                 } else {
-                    result = {satisfied: false, message: "One (or more) of the parts {domain}, {type} or {concept} is missing."};
+                    result = {
+                        satisfied: false,
+                        message: "Eén of meerdere delen van {domain}, {type} and {concept} ontbreken."
+                    };
                 }
 
             } else {
-                result = {satisfied: false, message: "{protocol} must be http or https"}
+                result = {satisfied: false, message: "{protocol} moet HTTP of HTTPS zijn."}
             }
 
         } else {
-            result = {satisfied: false, message: "This URI does not follow the recommended structure. Or {protocol} is missing or {domein}/{type}/{concept}(/{referentie})* is missing"};
+            result = {
+                satisfied: false,
+                message: "De URI voldoet niet aan de voorgeschreven structuur. Ofwel ontbreekt {protocol} ofwel {domein}/{type}/{concept}(/{referentie})* ontbreekt."
+            };
         }
 
         return result;
     }
-
-    // Function to check if the URI follows the recommended structure :
-    // {protocol}://{domein}/{type}/{concept}(/{referentie})*
-    /*private structureCheck(): checkResult {
-        const parts = this.URI.split('://');    // Split {protocol} from the others
-        let result = {satisfied: false, message : ""};
-
-        // We make sure {protocol} is also entered
-        if(parts.length  == 2 && parts[0].length > 0){
-            let structureParts = parts[1].split('/');
-
-            // structureParts.length must be greater than or equals 3 (must contain domein, type and concept. Reference is optional)
-            if(structureParts.length >= 3){
-                result = {satisfied: true, message: "URI follows the recommended structure. Reference is optional."};
-            } else {
-                result = {satisfied: false, message: "One of the parts domain, type or concept is missing. Reference is optional, so not obligated"};
-            }
-
-        } else {
-            result = {satisfied: false, message: "This URI does not follow the recommended structure. Or {protocol} is missing or {domein}/{type}/{concept}(/{referentie})* is missing"};
-        }
-
-        return result;
-
-    }*/
-
 }

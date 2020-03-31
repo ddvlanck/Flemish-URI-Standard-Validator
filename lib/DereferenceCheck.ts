@@ -29,19 +29,19 @@ export class DereferenceCheck implements IValidURI {
                     if (response.redirected === true && this.URI.replace('/id/', '/doc/') === response.url) {
                         result = {
                             satisfied: true,
-                            message: 'Correct redirect from URI with type id to same URI but with type doc.'
+                            message: ''
                         };
                     } else {
                         result = {
                             satisfied: false,
-                            message: 'Incorrect. Or response code is not 303 or redirect URL is incorrect.'
+                            message: 'Ofwel werd er geen redirect uitgevoerd ofwel is de redirect URL verkeerd.'
                         };
                     }
                     resolve(result);
                 });
             });
         } else {
-            result = {satisfied: false, message: 'Expected a URI with {type} id.'}
+            result = {satisfied: false, message: "Er wordt een URI met {type} 'id' verwacht"}
         }
         return result;
     }
@@ -63,19 +63,19 @@ export class DereferenceCheck implements IValidURI {
                     const contentType = response.headers.get('content-type');
 
                     if (response.status === 200 && contentType == serializations[index]) {
-                        result = {satisfied: true, message: 'Format supported.'};
+                        result = {satisfied: true, message: ''};
                     } else {
-                        result = {satisfied: false, message: 'Format not supported'};
+                        result = {satisfied: false, message: "Formaat wordt niet ondersteund"};
                     }
 
                     // Special cases -- application/ld+json returns application/json
                     if (response.status === 200 && serializations[index] === 'application/ld+json' && contentType == 'application/json') {
-                        result = {satisfied: true, message: 'Format supported.'};
+                        result = {satisfied: true, message: ''};
                     }
 
                     // application/n-triples returns text/ntriples
                     if (response.status === 200 && serializations[index] === 'application/n-triples' && contentType == 'text/ntriples') {
-                        result = {satisfied: true, message: 'Format supported.'};
+                        result = {satisfied: true, message: 'Formaat wordt niet ondersteund.'};
                     }
 
                     resolve(result);

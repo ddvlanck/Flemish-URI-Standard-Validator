@@ -62,19 +62,19 @@ export class DereferenceCheck implements IValidURI {
                     let result = {};
                     const contentType = response.headers.get('content-type');
 
-                    if (response.status === 200 && contentType == serializations[index]) {
+                    if (response.status === 200 && contentType.indexOf(serializations[index]) >= 0) {
                         result = {satisfied: true, message: ''};
                     } else {
                         result = {satisfied: false, message: "Formaat wordt niet ondersteund"};
                     }
 
                     // Special cases -- application/ld+json returns application/json
-                    if (response.status === 200 && serializations[index] === 'application/ld+json' && contentType == 'application/json') {
+                    if (response.status === 200 && serializations[index] === 'application/ld+json' && contentType.indexOf('application/json') >= 0) {
                         result = {satisfied: true, message: ''};
                     }
 
                     // application/n-triples returns text/ntriples
-                    if (response.status === 200 && serializations[index] === 'application/n-triples' && contentType == 'text/ntriples') {
+                    if (response.status === 200 && serializations[index] === 'application/n-triples' && contentType.indexOf('text/ntriples') >= 0) {
                         result = {satisfied: true, message: 'Formaat wordt niet ondersteund.'};
                     }
 

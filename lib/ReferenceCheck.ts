@@ -25,19 +25,19 @@ export class ReferenceCheck implements IValidURI {
 
         if(idPos > 0 || docPos > 0){
             if(this.URI.indexOf('#') > 0){
-                result = {satisfied: false, message: "Only when type is ns, using fragment identifiers is allowed."};
+                result = {satisfied: false, message: "Fragment identifiers zijn enkel toegelaten indien {type} 'ns' is."};
             } else {
-                result = {satisfied: true, message: "Type is doc or id, so using fragment identifiers is not allowed. In this case they were not used."};
+                result = {satisfied: true, message: ""};
             }
         } else if(nsPos > 0) {
             // Type is ns
             if(this.URI.indexOf('#') > 0){
-                result = {satisfied: true, message: "Type is ns, so using fragment identifiers is allowed. In this case, they were used."};
+                result = {satisfied: true, message: "{type} is 'ns', fragment identifiers zijn toegestaan, maar werden hier niet gebruikt."};
             } else {
-                result = {satisfied: true, message: "Type is ns, so using fragment identifiers is allowed. In this case, they were not used."};
+                result = {satisfied: true, message: "{type} is 'ns', fragment identifiers zijn toegestaan en werden gebruikt."};
             }
         } else {
-            result = {satisfied: false, message: "No {type} was given. See previous rules as it is obligated to provide a {type}."}
+            result = {satisfied: false, message: "Er werd geen {type} meegegeven. Zie bovenstaande regels omtrent het {type}."}
         }
 
         return {reference: result};

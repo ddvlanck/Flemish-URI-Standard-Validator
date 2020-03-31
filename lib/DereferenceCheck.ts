@@ -62,6 +62,7 @@ export class DereferenceCheck implements IValidURI {
                     let result = {};
                     const contentType = response.headers.get('content-type');
 
+
                     if (response.status === 200 && contentType.indexOf(serializations[index]) >= 0) {
                         result = {satisfied: true, message: ''};
                     } else {
@@ -75,7 +76,7 @@ export class DereferenceCheck implements IValidURI {
 
                     // application/n-triples returns text/ntriples
                     if (response.status === 200 && serializations[index] === 'application/n-triples' && contentType.indexOf('text/ntriples') >= 0) {
-                        result = {satisfied: true, message: 'Formaat wordt niet ondersteund.'};
+                        result = {satisfied: true, message: ''};
                     }
 
                     resolve(result);

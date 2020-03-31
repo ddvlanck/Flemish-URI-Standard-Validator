@@ -22,9 +22,9 @@ export class TypeCheck implements IValidURI{
         let result: checkResult;
 
         if(idPos < 0 && docPos < 0 && nsPos < 0){
-            result = {satisfied: false, message : "URI does NOT contain type id, doc or ns."};
+            result = {satisfied: false, message : "{type} is niet 'id', 'doc' of 'ns'."};
         } else {
-            result = {satisfied: true, message : "URI does contain type id, doc or ns."};
+            result = {satisfied: true, message : ""};
         }
 
         return {type: result};

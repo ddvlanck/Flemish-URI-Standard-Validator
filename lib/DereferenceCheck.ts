@@ -1,7 +1,7 @@
-import {checkResult, IValidURI} from "./IValidURI";
-
+import {IValidURI} from "./IValidURI";
 const fetch = require('node-fetch');
 
+// Can't implement checkResult here because formats is an array of objects.
 
 export class DereferenceCheck implements IValidURI {
     private URI: string;
@@ -25,20 +25,22 @@ export class DereferenceCheck implements IValidURI {
         if (idPos > 0) {
             result = await new Promise(resolve => {
                 let result;
-                fetch(this.URI).then((response: any) => {
-                    if (response.redirected === true && this.URI.replace('/id/', '/doc/') === response.url) {
-                        result = {
-                            satisfied: true,
-                            message: ''
-                        };
-                    } else {
-                        result = {
-                            satisfied: false,
-                            message: 'Ofwel werd er geen redirect uitgevoerd ofwel is de redirect URL verkeerd.'
-                        };
-                    }
-                    resolve(result);
-                });
+                    fetch(this.URI, {mode: 'cors'}).then((response: any) => {
+                        if (response.redirected === true && this.URI.replace('/id/', '/doc/') === response.url) {
+                            result = {
+                                satisfied: true,
+                                message: ''
+                            };
+                        } else {
+                            result = {
+                                satisfied: false,
+                                message: 'Ofwel werd er geen redirect uitgevoerd ofwel is de redirect URL verkeerd.'
+                            };
+                        }
+                        resolve(result);
+                    }).catch( (reason: any) => {
+                        resolve({satisfied: false, message: 'Probleem bij het bevragen van de URI.'});
+                    });
             });
         } else {
             result = {satisfied: false, message: "Er wordt een URI met {type} 'id' verwacht"}
@@ -52,6 +54,7 @@ export class DereferenceCheck implements IValidURI {
 
         for (let index in serializations) {
             const options = {
+                mode: 'cors',
                 headers: {
                     'Accept': serializations[index]
                 }
@@ -80,6 +83,8 @@ export class DereferenceCheck implements IValidURI {
                     }
 
                     resolve(result);
+                }).catch( (reason: any) => {
+                    resolve({satisfied: false, message: 'Probleem bij het bevragen van de URI.'});
                 });
             });
             // TODO: Possibility to stream this result back

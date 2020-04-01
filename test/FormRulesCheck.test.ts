@@ -9,7 +9,7 @@ describe('[FormRules]: The form rules checking module', () => {
     });
 
     // Protocol tests
-    it('should not be satisfied is an other protocol than HTTP(S) was used', () => {
+    it('should not be satisfied if an other protocol than HTTP(S) was used', () => {
         const URI = "ssh://data.vlaanderen.be";
         let formRules = new FormRulesCheck(URI).checkURI();
 
